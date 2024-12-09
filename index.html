@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>/slash - AI token on TON</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #0e0e0e;
+            color: #e0e0e0;
+            overflow-x: hidden;
+            position: relative;
+        }
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .star {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: twinkle 2s infinite;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        .abstract-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .abstract-lines::before,
+        .abstract-lines::after,
+        .abstract-lines .line1,
+        .abstract-lines .line2,
+        .abstract-lines .line3 {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .abstract-lines::before {
+            top: 20%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            transform: rotate(-10deg);
+        }
+        .abstract-lines::after {
+            top: 40%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            transform: rotate(10deg);
+        }
+        .abstract-lines .line1 {
+            top: 60%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            transform: rotate(-20deg);
+        }
+        .abstract-lines .line2 {
+            top: 80%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            transform: rotate(20deg);
+        }
+        .abstract-lines .line3 {
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            transform: rotate(-30deg);
+        }
+        header {
+            position: relative;
+            padding: 3rem 0 1rem 0;
+            text-align: center;
+            z-index: 1;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #ffffff, #8e44ad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            z-index: 1;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        .hero {
+            text-align: center;
+            padding: 2rem 0;
+            background-color: rgba(26, 26, 26, 0.8);
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 6rem;
+            background: linear-gradient(135deg, #ffffff, #8e44ad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .animated-phrases {
+    position: relative;
+    height: 50px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.phrase {
+    position: absolute;
+    top: -65%;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    animation: phraseAnimation 7.5s infinite;
+    font-size: 1.5rem;
+}
+
+.phrase:nth-child(1) {
+    animation-delay: 0s;
+    background: linear-gradient(135deg, #ffffff, #8e44ad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.phrase:nth-child(2) {
+    animation-delay: 2.5s;
+    background: linear-gradient(135deg, #8e44ad, #2980b9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.phrase:nth-child(3) {
+    animation-delay: 5s;
+    background: linear-gradient(135deg, #2980b9, #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@keyframes phraseAnimation {
+    0%, 25% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    30%, 45% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    50%, 100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+        .features {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 4rem 0;
+        }
+        .features .feature {
+            text-align: center;
+            flex: 1 1 300px;
+            margin: 1rem;
+            padding: 2rem;
+            background-color: rgba(26, 26, 26, 0.8);
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+        .features .feature:hover {
+            transform: translateY(-10px);
+        }
+        .features .feature h3 {
+            margin: 1rem 0;
+            color: #8e44ad;
+        }
+        .features .feature p {
+            color: #cccccc;
+        }
+        .roadmap {
+            background-color: rgba(26, 26, 26, 0.8);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 4rem 0;
+        }
+        .roadmap h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: linear-gradient(90deg, #8e44ad, #2980b9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .roadmap ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .roadmap ul li {
+            margin-bottom: 1rem;
+            color: #cccccc;
+            position: relative;
+            padding-left: 20px;
+        }
+        .roadmap ul li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #cccccc;
+        }
+        .roadmap ul li.completed::before {
+            background-color: #4CAF50;
+        }
+        .roadmap ul li.completed {
+            color: #4CAF50;
+        }
+        footer {
+            background-color: rgba(26, 26, 26, 0.8);
+            color: #e0e0e0;
+            text-align: center;
+            padding: 1rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .background-bar {
+            width: 100%;
+            height: 100px;
+            background-color: rgba(14, 14, 14, 0.8);
+            position: relative;
+            z-index: 0;
+        }
+        .more-info {
+            position: absolute;
+            top: -20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            z-index: 1;
+            width: 100%;
+        }
+        .telegram-button {
+            position: absolute;
+            top: -45%;
+            left: 50%;
+            transform: translate(-50%, 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+            width: 100%;
+        }
+        .telegram-button a {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 10px 20px;
+            background-color: rgba(0, 91, 181, 0.2);
+            border-radius: 25px;
+            text-decoration: none;
+            color: #e0e0e0;
+            transition: background-color 0.3s;
+            white-space: nowrap;
+        }
+        .telegram-button a:hover {
+            background-color: rgba(0, 91, 181, 0.4);
+        }
+        .telegram-button svg {
+            width: 35px;
+            height: 35px;
+            margin-right: 10px;
+        }
+        .telegram-button span {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            .hero .marquee-text {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars">
+        <div class="star" style="top: 10%; left: 20%; width: 2px; height: 2px;"></div>
+        <div class="star" style="top: 30%; left: 70%; width: 3px; height: 3px;"></div>
+        <div class="star" style="top: 50%; left: 40%; width: 1px; height: 1px;"></div>
+        <div class="star" style="top: 70%; left: 80%; width: 2.5px; height: 2.5px;"></div>
+        <div class="star" style="top: 90%; left: 10%; width: 1.5px; height: 1.5px;"></div>
+    </div>
+    <div class="abstract-lines">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+    </div>
+    <header>
+        <div class="container">
+            <h1>/slash</h1>
+        </div>
+    </header>
+    <section class="hero">
+    <div class="container">
+        <h1>A revolutionary crypto token on the TON blockchain</h1>
+        <div class="animated-phrases">
+            <div class="phrase phrase1">www://slash - make money</div>
+            <div class="phrase phrase2">www://slash - only on the TON ecosystem</div>
+            <div class="phrase phrase3">www://slash - you're in for an interesting</div>
+        </div>
+    </div>
+</section>
+    <section class="features">
+        <div class="container">
+            <div class="feature">
+                <h3>Foundation</h3>
+                <p>Built on the robust TON blockchain for limitless growth potential</p>
+            </div>
+            <div class="feature">
+                <h3>Fast</h3>
+                <p>Lightning-fast transactions for seamless trading</p>
+            </div>
+            <div class="feature">
+                <h3>Innovative</h3>
+                <p>Cutting-edge features for the future of finance</p>
+            </div>
+        </div>
+    </section>
+    <section class="roadmap">
+        <div class="container">
+            <h2>ROADMAP</h2>
+            <ul>
+                <li class="completed">LAUNCHING THE MEMEOIN IN BLUM MEMEPAD</li>
+                <li class="completed">ATTRACTING HOLDERS</li>
+                <li>ENTRY ON DEX</li>
+                <li>RELEASING AN NFT COLLECTION</li>
+                <li>10_000 HOLDERS + NFT COLLECTION 2</li>
+                <li>1 MILLION CAPITALIZATION</li>
+                <li>RELEASE 3 NFT COLLECTIONS, IN HONOR OF 1M CAPITALIZATION</li>
+                <li>ENTRY ON CEX</li>
+                <li>NEXT?</li>
+            </ul>
+        </div>
+    </section>
+    <div class="background-bar">
+        <div class="more-info">
+            <p>More information:</p>
+        </div>
+        <div class="telegram-button">
+            <a href="https://t.me/slashtonchannel" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 240.1 240.1">
+                    <linearGradient id="Oval_1_" gradientUnits="userSpaceOnUse" x1="-838.041" y1="660.581" x2="-838.041" y2="660.3427" gradientTransform="matrix(1000 0 0 -1000 838161 660581)">
+                        <stop offset="0" style="stop-color:#2AABEE"/>
+                        <stop offset="1" style="stop-color:#229ED9"/>
+                    </linearGradient>
+                    <circle fill-rule="evenodd" clip-rule="evenodd" fill="url(#Oval_1_)" cx="120.1" cy="120.1" r="120.1"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" d="M54.3,118.8c35-15.2,58.3-25.3,70-30.2 c33.3-13.9,40.3-16.3,44.8-16.4c1,0,3.2,0.2,4.7,1.4c1.2,1,1.5,2.3,1.7,3.3s0.4,3.1,0.2,4.7c-1.8,19-9.6,65.1-13.6,86.3 c-1.7,9-5,12-8.2,12.3c-7,0.6-12.3-4.6-19-9c-10.6-6.9-16.5-11.2-26.8-18c-11.9-7.8-4.2-12.1,2.6-19.1c1.8-1.8,32.5-29.8,33.1-32.3 c0.1-0.3,0.1-1.5-0.6-2.1c-0.7-0.6-1.7-0.4-2.5-0.2c-1.1,0.2-17.9,11.4-50.6,33.5c-4.8,3.3-9.1,4.9-13,4.8 c-4.3-0.1-12.5-2.4-18.7-4.4c-7.5-2.4-13.5-3.7-13-7.9C45.7,123.3,48.7,121.1,54.3,118.8z"/>
+                </svg>
+                <span>Join our Telegram</span>
+            </a>
+        </div>
+    </div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 /slash</p>
+        </div>
+    </footer>
+    <script>
+        function generateStars() {
+            const starsContainer = document.querySelector('.stars');
+            const numberOfStars = 100;
+            starsContainer.innerHTML = '';
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 3 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDuration = Math.random() * 2 + 1 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        generateStars();
+    </script>
+</body>
+</html>
